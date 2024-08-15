@@ -24,9 +24,11 @@ Completed On : ---
    <b>python manage.py collectstatic</b>
 
 4. Do migrations first (by default it will use sqlite, but you can always choose that like I am using Postgres, check project>settings.py>DATABASES)
+ 
+   <b>python manage.py makemigrations</b> (this creates the migration file of your models)
+   
+   <b>python manage.py migrate</b> (this migrate the changes introduced through migration file into db)
 
-   <b>python manage.py migrate</b>
-
-5. Create a superuser for django-admin (using this superuser username and password you can access django-admin)
+6. Create a superuser for django-admin (using this superuser username and password you can access django-admin)
 
    <b>python manage.py createsuperuser</b>
