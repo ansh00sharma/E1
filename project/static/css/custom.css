@@ -14,3 +14,17 @@
     animation-timing-function: ease-in-out;
     z-index: 1000;
 }
+.main-section {
+    position: relative; /* This is important for absolute positioning of child elements */
+}
+
+#alert-container {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 1000;
+    display: flex;
+    justify-content: center;
+    height: 500px;
+}

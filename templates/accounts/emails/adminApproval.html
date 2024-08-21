@@ -1,0 +1,13 @@
+{% autoescape off %}
+
+Hi {{user.first_name}},
+
+{% if is_approved %}
+<strong>Congratulations ! Your Restaurant has been approved by Admin of FoodOnline.</strong>
+<p>Start editing your menu and get millions of customers attention !</p>
+{% else %}
+<strong>We're Sorry ! You are not Eligible to publish your Food Menu at this Moment on FoodOnline.</strong>
+<p>For more details please contact our customer support at <b>support@foodonline.com</b></p>
+{% endif %}
+
+{% endautoescape %}
