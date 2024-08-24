@@ -13,7 +13,7 @@ urlpatterns = [
     path('menuBuilder/deleteCategory/<int:id>/',  views.deleteCategory, name='deleteCategory'),
 
     path('menuBuilder/addFoodItem/<int:id>/',  views.addFoodItem, name='addFoodItem'),
-    path('menuBuilder/editFoodItem/<int:id>/',  views.editFoodItem, name='editFoodItem'),
+    path('menuBuilder/editFoodItem/<int:cid>/<int:fid>',  views.editFoodItem, name='editFoodItem'),
     path('menuBuilder/deleteFoodItem/<int:id>/',  views.deleteFoodItem, name='deleteFoodItem'),
     
     
