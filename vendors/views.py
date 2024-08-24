@@ -3,7 +3,7 @@ from accounts.models import UserProfile
 from vendors.models import Vendor
 from menu.apps import MenuConfig
 from menu.models import Category, FoodItem
-from menu.forms import AddCategoryForm
+from menu.forms import AddCategoryForm, AddFoodItemForm
 from .forms import VendorForm
 from accounts.forms import UserProfileForm
 from django.contrib import messages
@@ -15,6 +15,10 @@ from django.template.defaultfilters import slugify
 
 def get_vendor(request):
     return Vendor.objects.get(user = request.user)
+
+def get_category(vendor,id):
+    # return Category.objects.get(vendor = vendor, pk=id)
+    return get_object_or_404(Category, pk=id)
 
 
 @login_required(login_url='login')
@@ -109,7 +113,9 @@ def addCategory(request):
         if form.is_valid():
             category_name = form.cleaned_data['category_name'] 
             category = form.save(commit=False)
+                        
             category.vendor = get_vendor(request)
+         
             category.slug = slugify(category_name)
             form.save()
             messages.success(request, "New Category Added Successfully !") 
@@ -120,3 +126,35 @@ def addCategory(request):
         'form':form
     }
     return render(request, "vendors/addCategory.html",context)    
+
+
+def addFoodItem(request, id=None):
+    if request.method == "POST":
+        form = AddFoodItemForm(request.POST, request.FILES)
+        if form.is_valid():
+            food_title = form.cleaned_data['food_title'] 
+            fooditem = form.save(commit=False)
+
+            vendor = get_vendor(request)
+            category = get_category(vendor,id)
+            print(vendor, category)
+            fooditem.vendor = vendor
+            fooditem.category = category
+
+            fooditem.slug = slugify(food_title)
+            form.save()
+            messages.success(request, "New Food Item Added Successfully !") 
+            return redirect("foodItemsByCategory", fooditem.category.id)
+    else:
+        form = AddFoodItemForm()
+    context = {
+        'form':form,
+        'cat_id' : id
+    }
+    return render(request, "vendors/addFoodItem.html",context)
+
+def editFoodItem(request):
+    return render(request, "vendors/editFoodItem.html",context)
+
+def deleteFoodItem(request):
+    return 
