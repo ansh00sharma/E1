@@ -16,7 +16,7 @@ class Migration(migrations.Migration):
             name='UserProfile',
             fields=[
                 ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('profile_picture', models.ImageField(blank=True, null=True, upload_to='users/profile_pciture')),
+                ('profile_picture', models.ImageField(blank=True, null=True, upload_to='users/profile_picture')),
                 ('cover_photo', models.ImageField(blank=True, null=True, upload_to='users/cover_photo')),
                 ('address_line1', models.CharField(blank=True, max_length=50, null=True)),
                 ('address_line2', models.CharField(blank=True, max_length=50, null=True)),

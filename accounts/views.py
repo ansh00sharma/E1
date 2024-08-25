@@ -1,5 +1,6 @@
 import django.contrib.auth.tokens
 from django.shortcuts import render, redirect
+import django.template.defaultfilters
 import django.utils.http
 from vendors.forms import VendorForm
 from accounts.models import User
@@ -12,7 +13,7 @@ from django.core.exceptions import PermissionDenied
 from django.utils.http import urlsafe_base64_decode
 from django.contrib.auth.tokens import default_token_generator
 from vendors.models import Vendor
-
+from django.template.defaultfilters import slugify
 # restrict the vendor from accessing the customer page
 def check_role_vendor(user):
     if user.role == 1:
@@ -81,6 +82,7 @@ def registerVendor(request):
             email = u_form.cleaned_data['email']
             phone_number = u_form.cleaned_data['phone_number']
             username = u_form.cleaned_data['username']
+            vendor_slug = v_form.cleaned_data['vendor_name']
             user = User.objects.create_user(first_name,last_name,username=username,email=email,password=password)
             user.phone_number = phone_number
             user.role = User.VENDOR
@@ -88,6 +90,7 @@ def registerVendor(request):
 
             vendor = v_form.save(commit=False)    
             vendor.user = user
+            vendor.vendor_slug = slugify(vendor_slug)+'-'+str(user.id)
             vendor_profile = UserProfile.objects.get(user=user)
             vendor.user_profile = vendor_profile
             vendor.save()
