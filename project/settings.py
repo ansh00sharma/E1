@@ -68,6 +68,7 @@ TEMPLATES = [
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
                 'accounts.contextProcessors.getVendor',
+                'accounts.contextProcessors.get_google_api',
                 'marketplace.contextProcessors.getCartCounter',
                 'marketplace.contextProcessors.get_cart_amounts'
             ],
@@ -147,6 +148,9 @@ MESSAGE_TAGS = {
     messages.ERROR : 'danger',
     messages.SUCCESS : 'success'
 }
+
+# Google API key for Autocomplete Search
+GOOGLE_API_KEY = config('GOOGLE_API_KEY')
 
 # Email configurations
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'

@@ -1,4 +1,5 @@
 from vendors.models import Vendor
+from django.conf import settings
 
 def getVendor(request):
     try:
@@ -6,3 +7,6 @@ def getVendor(request):
     except:
         vendor = None    
     return dict(vendor=vendor)
+
+def get_google_api(request):
+    return{'GOOGLE_API_KEY':settings.GOOGLE_API_KEY}
