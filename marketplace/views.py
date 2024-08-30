@@ -1,6 +1,5 @@
-import django.contrib.auth.decorators
 from django.http import JsonResponse
-from django.shortcuts import get_object_or_404, render, HttpResponse
+from django.shortcuts import get_object_or_404, render
 from django.db.models import Prefetch
 from vendors.models import Vendor
 from menu.models import Category, FoodItem

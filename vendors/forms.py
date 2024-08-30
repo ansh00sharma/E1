@@ -1,5 +1,5 @@
 from django import forms
-from vendors.models import Vendor
+from vendors.models import Vendor, OpeningHour
 from .models import User
 from accounts.forms import UserForm
 from accounts.validators import allowOnlyImagesValidator
@@ -17,3 +17,9 @@ class VendorForm(forms.ModelForm):
 
     #     if password != confirm_password:
     #         raise forms.ValidationError("Password does not match !")    
+
+class OpeningHourForm(forms.ModelForm):
+    class Meta:
+        model = OpeningHour
+        fields = ['day','from_hour','to_hour','is_closed']
+

@@ -15,6 +15,10 @@ urlpatterns = [
     path('menuBuilder/addFoodItem/<int:id>/',  views.addFoodItem, name='addFoodItem'),
     path('menuBuilder/editFoodItem/<int:cid>/<int:fid>',  views.editFoodItem, name='editFoodItem'),
     path('menuBuilder/deleteFoodItem/<int:id>/',  views.deleteFoodItem, name='deleteFoodItem'),
+
+    path('openingHour/', views.openingHour, name="openingHour"),
+    path('openingHour/add/', views.addOpeningHour, name="addOpeningHour"),
+    path('openingHour/remove/<int:id>/', views.removeOpeningHour, name="removeOpeningHour")
     
     
 ]

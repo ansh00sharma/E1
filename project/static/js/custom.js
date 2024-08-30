@@ -214,13 +214,9 @@ $(document).ready(function(){
             $('#subtotal').html(subtotal)
             $('#total').html(grand_total)
             $('#tax').html(tax_dict)
-
-
-            console.log(tax_dict)
-            for(key1 in tax_dict){
-                console.log(tax_dict[key1])
-                for(key2 in tax_dict[key1]){
-                    // console.log(tax_dict[key1][key2])
+     
+            for(key1 in tax_dict){                
+                for(key2 in tax_dict[key1]){                    
                     $('#tax-'+key1).html(tax_dict[key1][key2])
                 }
             }
@@ -261,9 +257,9 @@ $(document).ready(function(){
                 success: function(response){
                     if(response.status == 'success'){
                         if(response.is_closed == 'Closed'){
-                            html = '<tr id="hour-'+response.id+'"><td><b>'+response.day+'</b></td><td>Closed</td><td><a href="#" class="remove_hour" data-url="/vendor/opening-hours/remove/'+response.id+'/">Remove</a></td></tr>';
+                            html = '<tr id="hour-'+response.id+'"><td><b>'+response.day+'</b></td><td>Closed</td><td><a href="#" class="remove_hour" data-url="/vendors/openingHour/remove/'+response.id+'/">Remove</a></td></tr>';
                         }else{
-                            html = '<tr id="hour-'+response.id+'"><td><b>'+response.day+'</b></td><td>'+response.from_hour+' - '+response.to_hour+'</td><td><a href="#" class="remove_hour" data-url="/vendor/opening-hours/remove/'+response.id+'/">Remove</a></td></tr>';
+                            html = '<tr id="hour-'+response.id+'"><td><b>'+response.day+'</b></td><td>'+response.from_hour+' - '+response.to_hour+'</td><td><a href="#" class="remove_hour" data-url="/vendors/openingHour/remove/'+response.id+'/">Remove</a></td></tr>';
                         }
                         
                         $(".opening_hours").append(html)
@@ -282,12 +278,14 @@ $(document).ready(function(){
     $(document).on('click', '.remove_hour', function(e){
         e.preventDefault();
         url = $(this).attr('data-url');
+        console.log(url)
         
         $.ajax({
             type: 'GET',
             url: url,
             success: function(response){
                 if(response.status == 'success'){
+                    console.log("mc")
                     document.getElementById('hour-'+response.id).remove()
                 }
             }
