@@ -1,6 +1,4 @@
-import accounts.forms
 from django import forms
-import django.shortcuts
 from .models import User, UserProfile
 from .validators import allowOnlyImagesValidator
 
@@ -21,7 +19,7 @@ class UserForm(forms.ModelForm):
         
 
 class UserProfileForm(forms.ModelForm):
-    address = forms.CharField(widget=forms.TextInput(attrs={'placeholder':'Start Typing Address ...', 'required':'required'}),validators=[allowOnlyImagesValidator])
+    address = forms.CharField(widget=forms.TextInput(attrs={'placeholder':'Start Typing Address ...', 'required':'required'}))
     profile_picture = forms.FileField(widget=forms.FileInput(attrs={'class':'btn btn-info'}),validators=[allowOnlyImagesValidator])
     cover_photo = forms.FileField(widget=forms.FileInput(attrs={"class":"btn btn-info"}), validators=[allowOnlyImagesValidator])
     

@@ -1,11 +1,12 @@
 from django.http import JsonResponse
 from django.shortcuts import get_object_or_404, render
 from django.db.models import Prefetch
-from vendors.models import Vendor
+from vendors.models import OpeningHour, Vendor
 from menu.models import Category, FoodItem
 from .models import Cart
 from .contextProcessors import getCartCounter, get_cart_amounts
 from django.contrib.auth.decorators import login_required
+from datetime import date, datetime
 # Create your views here.
 
 def marketPlace(request):
@@ -23,6 +24,11 @@ def vendorDetail(request, vendor_slug):
     categories = Category.objects.filter(vendor=vendor).prefetch_related(
         Prefetch('fooditems',queryset= FoodItem.objects.filter(is_available=True))
     )
+
+    opening_hours = OpeningHour.objects.filter(vendor=vendor).order_by('day','from_hour')
+    today_opening_hours = OpeningHour.objects.filter(vendor=vendor,day=date.today().isoweekday())
+    current_time = datetime.now().strftime("%H:%M:%S")
+
     if request.user.is_authenticated:
         cart_items = Cart.objects.filter(user= request.user)
     else:
@@ -30,7 +36,9 @@ def vendorDetail(request, vendor_slug):
     content = {
         'vendor':vendor,
         'categories':categories,
-        'cart_items':cart_items
+        'cart_items':cart_items,
+        'opening_hours':opening_hours,
+        'today_opening_hours':today_opening_hours,
     }
     return render(request, 'marketplace/vendorDetail.html',content)
 
