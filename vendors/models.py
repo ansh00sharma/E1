@@ -50,7 +50,8 @@ class Vendor(models.Model):
                 context = {
                     'user':self.user,
                     'is_approved': self.is_approved,
-                    'domain' : 'FoodOnline Marketplace'
+                    'domain' : 'FoodOnline Marketplace',
+                    "to_email" : self.user.email,
                 }
                 send_notification(self.user,mail_subject,mail_template,context)   
 

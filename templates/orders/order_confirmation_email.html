@@ -1,0 +1,11 @@
+{% autoescape off %}
+
+Hi {{user.first_name}},
+
+Thank you for ordering with FoodOnline. Your order is Being Prepared !
+
+Your Order Number : {{order.order_number}}
+Transaction ID : {{order.payment.transaction_id}}
+
+
+{% endautoescape %}

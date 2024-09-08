@@ -43,6 +43,7 @@ INSTALLED_APPS = [
     'menu',
     'marketplace',
     'customers',
+    'orders',
 ]
 
 MIDDLEWARE = [
@@ -71,6 +72,7 @@ TEMPLATES = [
                 'accounts.contextProcessors.getVendor',
                 'accounts.contextProcessors.getUserProfile',
                 'accounts.contextProcessors.get_google_api',
+                'accounts.contextProcessors.get_paypal_client_id',
                 'marketplace.contextProcessors.getCartCounter',
                 'marketplace.contextProcessors.get_cart_amounts'
 
@@ -163,3 +165,10 @@ EMAIL_HOST_USER = config('EMAIL_HOST_USER')
 EMAIL_HOST_PASSWORD = config('EMAIL_HOST_PASSWORD')
 EMAIL_USE_TLS = config('EMAIL_USE_TLS', default=True, cast=bool)
 DEFAULT_FROM_EMAIL= config('DEFAULT_FROM_EMAIL')
+
+PAYPAL_CLIENT_ID = config('PAYPAL_CLIENT_ID')
+
+RAZORPAY_CLIENT_ID = config('RAZORPAY_CLIENT_ID')
+RAZORPAY_KEY_SECRET = config('RAZORPAY_KEY_SECRET')
+
+SECURE_CROSS_ORIGIN_OPENER_POLICY = 'same-origin-allow-popups'

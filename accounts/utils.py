@@ -36,11 +36,17 @@ def send_verification_email(request, user,mail_subject,email_template):
     except Exception as e:
         print(e)
 
-def send_notification(Vendor,mail_subject,mail_template,context):
+def send_notification(mail_subject,mail_template,context):
+    print(f"sending email to {context['to_email']}")
     from_email = settings.DEFAULT_FROM_EMAIL 
     message = render_to_string(mail_template,context)
-    to_email = context['user'].email
-    mail = EmailMessage(mail_subject, message, from_email, to=[to_email],bcc=[context['domain']])
-    mail.send()        
+    if(isinstance(context['to_email'],str)):
+        to_email = []
+        to_email.append(context['to_email'])
+    else:
+        to_email = context['to_email']
+    mail = EmailMessage(mail_subject, message, from_email, to=to_email,bcc=[context['domain']])
+    mail.send()      
+    print(f"email send successfully to {to_email}") 
 
 
