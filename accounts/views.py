@@ -5,6 +5,7 @@ import django.utils.http
 from vendors.forms import VendorForm
 from accounts.models import User
 from accounts.utils import detectUser , send_verification_email
+from orders.models import Order
 from . forms import UserForm
 from . models import User, UserProfile
 from django.contrib import messages, auth
@@ -143,7 +144,14 @@ def logout(request):
 @login_required(login_url='login')
 @user_passes_test(check_role_customer)
 def customerDashboard(request):
-    return render(request, 'accounts/customerDashboard.html')
+    order = Order.objects.filter(user=request.user, is_ordered=True)
+    recent_orders = order[:5]
+    context = {
+        'orders':order,
+        'orders_count':order.count(),
+        'recent_orders':recent_orders
+    }
+    return render(request, 'accounts/customerDashboard.html',context=context)
 
 @login_required(login_url='login')
 @user_passes_test(check_role_vendor)
