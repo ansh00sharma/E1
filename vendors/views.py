@@ -4,6 +4,7 @@ from accounts.models import UserProfile
 from vendors.models import OpeningHour, Vendor
 from menu.models import Category, FoodItem
 from menu.forms import AddCategoryForm, AddFoodItemForm
+from orders.models import Order, OrderedFood
 from .forms import VendorForm, OpeningHourForm
 from accounts.forms import UserProfileForm
 from django.contrib import messages
@@ -247,3 +248,27 @@ def removeOpeningHour(request,id=None):
             return JsonResponse({'status':'success','id':id})
 
      
+def orderDetails(request, order_number):
+    try:
+        order = Order.objects.get(order_number=order_number, is_ordered=True)
+        ordered_food = OrderedFood.objects.filter(order=order, fooditem__vendor=get_vendor(request))
+        context = {
+            'order':order,
+            'ordered_food':ordered_food,
+            'sub_total': order.get_total_by_vendor()['subtotal'],
+            'tax_dict': order.get_total_by_vendor()['tax_dict'],
+            'grand_total':order.get_total_by_vendor()['grand_total']
+        }
+        return render(request,'vendors/orderDetails.html',context=context)
+    except:
+        return redirect('vendor')
+
+def vendorMyOrders(request):
+    vendor = Vendor.objects.get(user = request.user)  
+    orders = Order.objects.filter(vendors__in=[vendor.id], is_ordered=True).order_by("-created_at")
+    context = {
+        'vendor' : vendor,
+        'orders':orders,
+    }
+    return render(request, 'vendors/vendorMyOrders.html', context=context)        
+    

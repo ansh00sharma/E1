@@ -4,7 +4,6 @@
             <li class="{% if '/customer/' == request.path or '/customerDashboard/' == request.path %}active{% endif %}"><a href="{% url 'customerDashboard' %}"><i class="icon-dashboard3"></i>Dashboard</a></li>
             <li class="{% if '/customer/myOrder/' == request.path or '/customer/orderDetails/' in request.path %}active{% endif %}"><a href="{% url 'myOrder' %}"><i class="icon-add_shopping_cart"></i>My Orders</a></li>
             <li class="{% if '/customer/profile/' == request.path %}active{% endif %}"><a href="{% url 'customerProfile' %}"><i class="icon-build"></i>Profile Settings</a></li>          
-            <li><a href="restaurant-change-password.html"><i class="icon-unlock-alt"></i>Change Password</a></li>
             <li><a class="logout-btn" href="registration.html"><i class="icon-log-out"></i>Logout</a></li>
         </ul>
     </div>
