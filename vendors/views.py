@@ -86,7 +86,9 @@ def editCategory(request,id=None):
             category_name = form.cleaned_data['category_name'] 
             category = form.save(commit=False)
             category.vendor = get_vendor(request)
-            category.slug = slugify(category_name)
+            new_slug = str(category_name)+str(category.vendor)
+            # category.slug = slugify(category_name)
+            category.slug = slugify(new_slug)
             form.save()
             messages.success(request, "Category Updated Successfully !") 
             return redirect("menuBuilder")
@@ -118,8 +120,9 @@ def addCategory(request):
             category = form.save(commit=False)
                         
             category.vendor = get_vendor(request)
-         
-            category.slug = slugify(category_name)
+            new_slug = str(category_name)+str(category.vendor)
+            # category.slug = slugify(category_name)
+            category.slug = slugify(new_slug)
             form.save()
             messages.success(request, "New Category Added Successfully !") 
             return redirect("menuBuilder")
@@ -145,8 +148,9 @@ def addFoodItem(request, id=None):
             print(vendor, category)
             fooditem.vendor = vendor
             fooditem.category = category
-
-            fooditem.slug = slugify(food_title)
+            new_slug = str(vendor)+str(food_title)
+            # fooditem.slug = slugify(food_title)
+            fooditem.slug = slugify(new_slug)
             form.save()
             messages.success(request, "New Food Item Added Successfully !") 
             return redirect("foodItemsByCategory", fooditem.category.id)
@@ -176,7 +180,9 @@ def editFoodItem(request, cid=None,fid=None):
             fooditem.vendor = vendor
             fooditem.category = category
             
-            fooditem.slug = slugify(food_title)
+            new_slug = str(vendor)+str(food_title)
+            # fooditem.slug = slugify(food_title)
+            fooditem.slug = slugify(new_slug)
             form.save()
             messages.success(request, "Food Item  Updated Successfully !") 
             return redirect("foodItemsByCategory", fooditem.category.id)

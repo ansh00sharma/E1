@@ -60,13 +60,15 @@ class Order(models.Model):
     
     def get_total_by_vendor(self):
         vendor = Vendor.objects.get(user=request_object.user)
+        print("vendor : ",vendor)
         subtotal = 0
         tax = 0
         tax_dict = {}
         if self.total_data:
             total_data = json.loads(self.total_data)
+            print('total_data : ',total_data)
             data = total_data.get(str(vendor.id))
-            
+            print('data : ',data, "vendor.id : ", vendor.id)
             for key, value in data.items():
                 subtotal += float(key)
                 value = value.replace("'",'"')
@@ -79,9 +81,9 @@ class Order(models.Model):
 
         grand_total = float(subtotal) + float(tax)
         context = {
-            'subtotal':subtotal,
-            'tax_dict':tax_dict,
-            'grand_total' : grand_total
+            'subtotal': round(subtotal,2),
+            'tax_dict': tax_dict,
+            'grand_total' : round(grand_total,2)
         }
         return context
     

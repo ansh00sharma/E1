@@ -39,16 +39,17 @@ def placeOrder(request):
             subtotal = (fooditem.price * i.quantity)
             k[v_id] = subtotal
 
-    # calculate individual vendor's tax
-    tax_dict = {}
-    for i in get_tax:
-        tax_type = i.tax_type
-        tax_percentage = i.tax_percentage
-        tax_amount = round((tax_percentage*subtotal)/100, 2)
-        tax_dict.update({tax_type: {str(tax_percentage): str(tax_amount)}})
+        # calculate individual vendor's tax
+        tax_dict = {}
+        for i in get_tax:
+            tax_type = i.tax_type
+            tax_percentage = i.tax_percentage
+            tax_amount = round((tax_percentage*subtotal)/100, 2)
+            tax_dict.update({tax_type: {str(tax_percentage): str(tax_amount)}})
 
-    total_data.update({fooditem.vendor.id : {str(subtotal): str(tax_dict)}})
-
+        total_data.update({fooditem.vendor.id : {str(subtotal): str(tax_dict)}})
+        
+    print('total_data : ',total_data)
     subtotal = get_cart_amounts(request)['subtotal']
     total_tax = get_cart_amounts(request)['tax']
     grand_total = get_cart_amounts(request)['grand_total']

@@ -97,7 +97,7 @@
                                         {% for category in categories %}
                                         <div class="element-title" id="menu-category-2">
                                             <h5 class="text-color">{{ category }}</h5>
-                                            <span>{{ category.description }}</span>
+                                            <span class="text-left">{{ category.description }}</span>
                                         </div>
                                         <ul>
                                             {% for food in category.fooditems.all %}
@@ -105,10 +105,10 @@
                                                 <div class="image-holder"> <img src="{{ food.image.url }}" alt=""></div>
                                                 <div class="text-holder">
                                                     <h6>{{ food }}</h6>
-                                                    <span>{{ food.description }}</span>
+                                                    <span class="text-left" >{{ food.description }}</span>
                                                 </div>
                                                 <div class="price-holder">
-                                                    <span class="price">${{ food.price }}</span>
+                                                    <span class="price " style="display:inline-block">${{ food.price }}</span>
                                                     <a href="#" class="remove_from_cart" data-id="{{ food.id }}" data-url="{% url 'removeItemFromCart' food.id %}" style="margin-right: 28px;"><i class="icon-minus text-color"></i></a>
                                                     <label id="qty-{{food.id}}">0</label>
                                                     <a href="#" class="add_to_cart" data-id="{{ food.id }}" data-url="{% url 'addItemToCart' food.id %}"><i class="icon-plus4 text-color"></i></a>                                                    
