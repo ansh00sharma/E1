@@ -5,10 +5,11 @@ from menu.models import FoodItem
 from .models import Order, OrderedFood, Payment
 from marketplace.contextProcessors import get_cart_amounts
 from marketplace.models import Cart, Tax
-from .utils import generate_order_number
+from .utils import generate_order_number, order_total_by_vendor
 import simplejson as json
 from accounts.utils import send_notification
 from django.contrib.auth.decorators import login_required
+from django.contrib.sites.shortcuts import get_current_site
 # Create your views here.
 
 @login_required(login_url='login')
@@ -124,20 +125,21 @@ def payments(request):
         # Sending mail to customer
         mail_subject = "Your Order is Placed.Thank you for Ordering with us."
         mail_template = 'orders/order_confirmation_email.html'
-        # ordered_food = OrderedFood.objects.filter(order=order)
-        # customer_subtotal = 0
-        # for item in ordered_food:
-        #     customer_subtotal += (item.price * item.quantity)
-        # tax_data = json.loads(order.tax_data)
+        ordered_food = OrderedFood.objects.filter(order=order)
+        customer_subtotal = 0
+        for item in ordered_food:
+            customer_subtotal+= (item.price*item.quantity)
+        tax_data = json.loads(order.tax_data)
 
         context = {
             'user': request.user,
             'order': order,
             'to_email': order.email,
-            # 'ordered_food': ordered_food,
-            'domain': 'FoodOnline Marketplace',
-            # 'customer_subtotal': customer_subtotal,
-            # 'tax_data': tax_data,
+            'domain': "Food Online",
+            # 'domain': get_current_site(request),
+            'ordered_food':ordered_food,
+            'customer_subtotal': round(customer_subtotal,2),
+            'tax_data':tax_data
         }
         send_notification(mail_subject,mail_template,context)
 
@@ -147,16 +149,23 @@ def payments(request):
         to_emails = []
         for i in cart_items:
             if i.fooditem.vendor.user.email not in to_emails:
-                to_emails.append(i.fooditem.vendor.user.email)
+                to_emails.append(i.fooditem.vendor.user.email)\
 
-        context = {
-            "order" : order,
-            'to_email': to_emails,
-            'domain': 'FoodOnline Marketplace',
-        }
-        send_notification(mail_subject,mail_template,context)
+                ordered_food_to_vendor = OrderedFood.objects.filter(order=order,fooditem__vendor = i.fooditem.vendor)
 
-        # cart_items.delete()
+                context = {
+                    "order" : order,
+                    'to_email': i.fooditem.vendor.user.email,
+                    # 'domain': get_current_site(request),
+                    'domain': "Food Online",
+                    'ordered_food_to_vendor':ordered_food_to_vendor,
+                    'vendor_subtotal' : order_total_by_vendor(order, i.fooditem.vendor.id)['subtotal'],
+                    'tax_data' : order_total_by_vendor(order, i.fooditem.vendor.id)['tax_dict'],
+                    'vendor_grandtotal' : order_total_by_vendor(order, i.fooditem.vendor.id)['grand_total'],
+                }
+                send_notification(mail_subject,mail_template,context)
+
+        cart_items.delete()
 
         response = {
             'order_number':order_number,

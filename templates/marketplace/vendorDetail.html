@@ -97,7 +97,7 @@
                                         {% for category in categories %}
                                         <div class="element-title" id="menu-category-2">
                                             <h5 class="text-color">{{ category }}</h5>
-                                            <span class="text-left">{{ category.description }}</span>
+                                            <span class="text-left"{{ category.description }}</span>
                                         </div>
                                         <ul>
                                             {% for food in category.fooditems.all %}
@@ -105,7 +105,7 @@
                                                 <div class="image-holder"> <img src="{{ food.image.url }}" alt=""></div>
                                                 <div class="text-holder">
                                                     <h6>{{ food }}</h6>
-                                                    <span class="text-left" >{{ food.description }}</span>
+                                                    <span class="text-left" style="width:470px">{{ food.description }}</span>
                                                 </div>
                                                 <div class="price-holder">
                                                     <span class="price " style="display:inline-block">${{ food.price }}</span>

@@ -53,7 +53,7 @@ class Vendor(models.Model):
                     'domain' : 'FoodOnline Marketplace',
                     "to_email" : self.user.email,
                 }
-                send_notification(self.user,mail_subject,mail_template,context)   
+                send_notification(mail_subject,mail_template,context)   
 
         return super(Vendor,self).save(*args, **kwargs)
     
