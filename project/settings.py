@@ -13,6 +13,7 @@ https://docs.djangoproject.com/en/5.1/ref/settings/
 from pathlib import Path
 from decouple import config
 from django.contrib.messages import constants as messages
+import dj_database_url
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -97,16 +98,23 @@ WSGI_APPLICATION = 'project.wsgi.application'
 # https://docs.djangoproject.com/en/5.1/ref/settings/#databases
 
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql',
-        'NAME' : config('NAME'),
-        'USER' : config('USER'),
-        'PASSWORD' : config('PASSWORD'),
-        'HOST' : config('HOST'),
-        'PORT' : config('PORT'),
-    
-    }
+    'default': dj_database_url.config(
+        default=config('DATABASE_URL')  # This will load the DATABASE_URL from the .env
+    )
 }
+
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.postgresql',
+#         'NAME' : config('NAME'),
+#         'USER' : config('USER'),
+#         'PASSWORD' : config('PASSWORD'),
+#         'HOST' : config('HOST'),
+#         'PORT' : config('PORT'),
+    
+#     }
+# }
+
 
 AUTH_USER_MODEL = 'accounts.User'
 
