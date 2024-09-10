@@ -29,6 +29,12 @@ SECRET_KEY = config('SECRET_KEY')
 
 ALLOWED_HOSTS = ['.vercel.app','localhost','.now.sh','127.0.0.1']
 
+# HTTPS settings
+SESSION_COOKIE_SECURE= True
+CSRF_COOKIE_SECURE = True
+SECURE_SSL_REDIRECT = True
+
+# HSTS settings
 
 # Application definition
 
