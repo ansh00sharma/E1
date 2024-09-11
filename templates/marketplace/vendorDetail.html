@@ -109,7 +109,7 @@
                                                 </div>
                                                 <div class="price-holder">
                                                     <span class="price " style="display:inline-block">${{ food.price }}</span>
-                                                    <a href="#" class="remove_from_cart" data-id="{{ food.id }}" data-url="{% url 'removeItemFromCart' food.id %}" style="margin-right: 28px;"><i class="icon-minus text-color"></i></a>
+                                                    <a href="#" class="decrease_cart" data-id="{{ food.id }}" data-url="{% url 'removeItemFromCart' food.id %}" style="margin-right: 28px;"><i class="icon-minus text-color"></i></a>
                                                     <label id="qty-{{food.id}}">0</label>
                                                     <a href="#" class="add_to_cart" data-id="{{ food.id }}" data-url="{% url 'addItemToCart' food.id %}"><i class="icon-plus4 text-color"></i></a>                                                    
                                                 </div>
