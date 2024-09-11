@@ -31,7 +31,7 @@
                                                     <div class="image-holder"> <img src="{{ item.fooditem.image.url }}" alt=""></div>
                                                     <div class="text-holder">
                                                         <h6>{{ item.fooditem }}</h6>
-                                                        <span>{{ item.fooditem.description }}</span>
+                                                        <span style="width:350px;">{{ item.fooditem.description }}</span>
                                                         <a href="{% url 'vendorDetail' item.fooditem.vendor.vendor_slug %}" class="badge badge-warning">{{ item.fooditem.vendor }}</a>
                                                     </div>
                                                     <div class="price-holder">
