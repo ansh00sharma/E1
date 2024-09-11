@@ -5,9 +5,11 @@
 
 Start Date : 15th Auguest 2024 
 
-Excepted Completion Date : 22nd August 2024
+Excepted Completion Date : 15nd September 2024
 
-Completed On : --- 
+Completed On : --- 11th September
+
+Deployed on Vercel : https://e1-ebon.vercel.app/
 
 ---------------------------------------------------------------------------------------------------------
 
