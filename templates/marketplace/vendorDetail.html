@@ -83,49 +83,54 @@
                     </div>
                 </div>
                 <div class="col-lg-9 col-md-9 col-sm-8 col-xs-12">
-                    <div class="tabs-holder horizontal">
-                        <ul class="stickynav-tabs nav nav-tabs">
-                            <li class="active"><a data-toggle="tab" href="#home"><i class="icon- icon-room_service"></i>Menu</a></li>
-                            
-                        </ul>
-                        <div class="tab-content">
-                            <div id="home" class="tab-pane in active">
-                                <div class="menu-itam-holder">
-                                    
-                                    <div id="menu-item-list-6272" class="menu-itam-list">
-                                        
-                                        {% for category in categories %}
-                                        <div class="element-title" id="menu-category-2">
-                                            <h5 class="text-color">{{ category }}</h5>
-                                            <span class="text-left"{{ category.description }}</span>
+                    {% for i in today_opening_hours %}
+                        {% if i.is_closed %}
+                            <h2 class="text-center">We Are Closed Today</h2>
+                        {% else %}
+                            <div class="tabs-holder horizontal">
+                                <ul class="stickynav-tabs nav nav-tabs">
+                                    <li class="active"><a data-toggle="tab" href="#home"><i class="icon- icon-room_service"></i>Menu</a></li>    
+                                </ul>
+                                <div class="tab-content">
+                                    <div id="home" class="tab-pane in active">
+                                        <div class="menu-itam-holder">
+                                            
+                                            <div id="menu-item-list-6272" class="menu-itam-list">
+                                                
+                                                {% for category in categories %}
+                                                <div class="element-title" id="menu-category-2">
+                                                    <h5 class="text-color">{{ category }}</h5>
+                                                    <span class="text-left"{{ category.description }}></span>
+                                                </div>
+                                                <ul>
+                                                    {% for food in category.fooditems.all %}
+                                                    <li>
+                                                        <div class="image-holder"> <img src="{{ food.image.url }}" alt=""></div>
+                                                        <div class="text-holder">
+                                                            <h6>{{ food }}</h6>
+                                                            <span class="text-left" style="width:470px">{{ food.description }}</span>
+                                                        </div>
+                                                        <div class="price-holder">
+                                                            <span class="price " style="display:inline-block">${{ food.price }}</span>
+                                                            <a href="#" class="decrease_cart" data-id="{{ food.id }}" data-url="{% url 'removeItemFromCart' food.id %}" style="margin-right: 28px;"><i class="icon-minus text-color"></i></a>
+                                                            <label id="qty-{{food.id}}">0</label>
+                                                            <a href="#" class="add_to_cart" data-id="{{ food.id }}" data-url="{% url 'addItemToCart' food.id %}"><i class="icon-plus4 text-color"></i></a>                                                    
+                                                        </div>
+                                                    </li>
+                                                    {% endfor %}                                            
+                                                </ul>
+                                                {% endfor %}                                        
+                                            </div>
+                                            {% for item in cart_items %}
+                                                <span id="qty-{{item.fooditem.id}}" class="item_qty d-none" data-qty="{{ item.quantity }}">{{ item.quantity }}</span>
+                                            {% endfor %}
                                         </div>
-                                        <ul>
-                                            {% for food in category.fooditems.all %}
-                                            <li>
-                                                <div class="image-holder"> <img src="{{ food.image.url }}" alt=""></div>
-                                                <div class="text-holder">
-                                                    <h6>{{ food }}</h6>
-                                                    <span class="text-left" style="width:470px">{{ food.description }}</span>
-                                                </div>
-                                                <div class="price-holder">
-                                                    <span class="price " style="display:inline-block">${{ food.price }}</span>
-                                                    <a href="#" class="decrease_cart" data-id="{{ food.id }}" data-url="{% url 'removeItemFromCart' food.id %}" style="margin-right: 28px;"><i class="icon-minus text-color"></i></a>
-                                                    <label id="qty-{{food.id}}">0</label>
-                                                    <a href="#" class="add_to_cart" data-id="{{ food.id }}" data-url="{% url 'addItemToCart' food.id %}"><i class="icon-plus4 text-color"></i></a>                                                    
-                                                </div>
-                                            </li>
-                                            {% endfor %}                                            
-                                        </ul>
-                                        {% endfor %}                                        
                                     </div>
-                                    {% for item in cart_items %}
-                                        <span id="qty-{{item.fooditem.id}}" class="item_qty d-none" data-qty="{{ item.quantity }}">{{ item.quantity }}</span>
-                                    {% endfor %}
+                                    
                                 </div>
                             </div>
-                            
-                        </div>
-                    </div>
+                        {% endif %}
+                    {% endfor %}
                 </div>
                 
             </div>
